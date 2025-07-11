@@ -75,23 +75,55 @@ L'applicazione fornisce un'interfaccia command-line con i seguenti comandi:
 
 ```
 note/
-├── Program.cs              # Punto di ingresso e logica principale
-├── note.csproj            # File di progetto
-├── note.sln               # Solution file
-├── global.json            # Configurazione .NET
-└── README.md              # Questo file
+├── Program.cs                  # Punto di ingresso dell'applicazione
+├── Interfaces/
+│   └── ICommand.cs            # Interfaccia per il pattern Command
+├── Models/
+│   ├── Note.cs                # Modello dati per le note
+│   └── SaveData.cs            # Modello per il salvataggio automatico
+├── Services/
+│   ├── NoteService.cs         # Servizio per gestire le note
+│   └── CommandProcessor.cs   # Processore per l'esecuzione dei comandi
+├── Commands/
+│   ├── AddNoteCommand.cs      # Comando per aggiungere note
+│   ├── ListNotesCommand.cs    # Comando per elencare note
+│   ├── DeleteNoteCommand.cs   # Comando per eliminare note
+│   ├── SearchNoteCommand.cs   # Comando per cercare note
+│   ├── UpdateNoteCommand.cs   # Comando per aggiornare note
+│   ├── ExportNotesCommand.cs  # Comando per esportare note
+│   ├── ImportNotesCommand.cs  # Comando per importare note
+│   ├── HelpCommand.cs         # Comando per mostrare l'aiuto
+│   └── ExitCommand.cs         # Comando per uscire dall'app
+├── note.csproj                # File di progetto
+├── note.sln                   # Solution file
+├── global.json               # Configurazione .NET
+└── README.md                 # Questo file
 ```
 
 ## Funzionalità tecniche
 
+### Architettura modulare
+L'applicazione utilizza una struttura modulare ben organizzata:
+- **Namespace separati** per ogni layer dell'applicazione
+- **Separation of Concerns** con classi specializzate
+- **Interfaces** per garantire flessibilità e testabilità
+
 ### Pattern Command
-L'applicazione utilizza il pattern Command per una struttura modulare e facilmente estensibile.
+L'applicazione utilizza il pattern Command per una struttura modulare e facilmente estensibile:
+- Ogni comando è una classe separata che implementa `ICommand`
+- Facilità nell'aggiungere nuovi comandi senza modificare il codice esistente
+- Gestione centralizzata dei comandi nel `CommandProcessor`
+
+### Gestione dei dati
+- **Auto-save** automatico in formato JSON
+- **Import/Export** per backup e condivisione
+- **Persistenza** tra sessioni dell'applicazione
 
 ### Salvataggio automatico
-Le note vengono salvate automaticamente in un file JSON (`note.json`) ad ogni modifica.
+Le note vengono salvate automaticamente in un file JSON (`note.json`) ad ogni modifica e all'uscita dell'applicazione.
 
 ### Gestione degli errori
-L'applicazione gestisce gracefully gli errori di input e operazioni non valide.
+L'applicazione gestisce gracefully gli errori di input e operazioni non valide con messaggi informativi.
 
 ## Sviluppo futuro
 
